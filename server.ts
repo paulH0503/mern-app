@@ -5,9 +5,9 @@ import path from 'path';
 // app
 const app: Application = express();
 
-app.use(express.static(__dirname + 'client/build'));
+app.use(express.static(__dirname + '/client/build'));
 app.get('*', (req, res) => {
-  console.log(__dirname, "__dirname");
+  console.log(__dirname + '/client/build', "__dirname");
   const root = path.join(__dirname, 'client', 'build');
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 })
