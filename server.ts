@@ -5,11 +5,15 @@ import path from 'path';
 // app
 const app: Application = express();
 
-app.use(express.static(__dirname + '/client/build'));
+let pathClient = __dirname + '/client/build';
+if (process.env.NODE_ENV === 'production') {
+  // build prod into dist so need to out 1 level directory
+  pathClient = __dirname + '/../client/build';
+}
+app.use(express.static(pathClient));
 app.get('*', (req, res) => {
-  console.log(__dirname + '/client/build', "__dirname");
-  const root = path.join(__dirname, 'client', 'build');
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  console.log(pathClient, "__dirname");
+  res.sendFile(path.resolve(pathClient, 'index.html'));
 })
 // init
 root(app)
